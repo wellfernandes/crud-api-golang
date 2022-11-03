@@ -10,7 +10,7 @@ func GetAll() (todos []Todo, err error) {
 	}
 	defer conn.Close()
 
-	rows, err := conn.Query(`SELECT * FROM todos`)
+	rows, err := conn.Query(`SELECT * FROM tb_todos`)
 	if err != nil {
 		return
 	}
