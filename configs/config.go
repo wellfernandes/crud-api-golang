@@ -47,10 +47,11 @@ func Load() error {
 	return nil
 }
 
-func GetConfigInfo() (int, string, string, error) {
-	if cfg.Port == 0 || cfg.Host == "" || cfg.Database == "" {
-		return 0, "", "", errors.New("error in environment variables")
+func GetConfigInfo() (int, string, string, string, error) {
+	if cfg.Port == 0 || cfg.Host == "" ||
+		cfg.Database == "" || cfg.StrConn == "" {
+		return 0, "", "", "", errors.New("error in environment variables")
 	}
 
-	return cfg.Port, cfg.Host, cfg.Database, nil
+	return cfg.Port, cfg.Host, cfg.Database, cfg.StrConn, nil
 }
