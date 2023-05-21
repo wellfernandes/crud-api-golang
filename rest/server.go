@@ -15,7 +15,7 @@ func NewServerRouter() *mux.Router {
 
 var UserRoutes = []Route{
 	{
-		URI:     "/users",
+		URI:     "/user",
 		Method:  http.MethodPost,
 		Request: controller.Create,
 		Auth:    false,
