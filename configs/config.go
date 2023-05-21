@@ -1,67 +1,56 @@
 package configs
 
-import "github.com/spf13/viper"
-
-// pointer to config
-var cfg *config
-
-type config struct {
-	API APIConfig
-	DB  DBConfig
-}
-
-type APIConfig struct {
-	Port string
-}
+import (
+	"errors"
+	"fmt"
+	"github.com/joho/godotenv"
+	"log"
+	"os"
+	"strconv"
+)
 
 type DBConfig struct {
+	StrConn  string
 	Host     string
-	Port     string
+	Port     int
 	User     string
-	Pass     string
+	Password string
 	Database string
 }
 
-// function that is part of the Go lifecycle
-func init() {
-	viper.SetDefault("api.port", "9000")
-	viper.SetDefault("database.host", "localhost")
-	viper.SetDefault("database.port", "5432")
-}
+var cfg DBConfig
 
+// Load loads the environment variables
 func Load() error {
-	viper.SetConfigName("config")
-	viper.SetConfigType("toml")
-	viper.AddConfigPath(".")
-	err := viper.ReadInConfig()
+	var err error
 
+	err = godotenv.Load()
 	if err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
-			return err
-		}
+		log.Fatal(err)
 	}
 
-	cfg = new(config)
-
-	cfg.API = APIConfig{
-		Port: viper.GetString("api.port"),
+	cfg.Port, err = strconv.Atoi(os.Getenv("API_PORT"))
+	if err != nil {
+		cfg.Port = 9000 // default port
 	}
 
-	cfg.DB = DBConfig{
-		Host:     viper.GetString("database.host"),
-		Port:     viper.GetString("database.port"),
-		User:     viper.GetString("database.user"),
-		Pass:     viper.GetString("database.pass"),
-		Database: viper.GetString("database.name"),
-	}
+	cfg.Host = os.Getenv("HOST")
+	cfg.User = os.Getenv("DATABASE_USER")
+	cfg.Password = os.Getenv("DATABASE_PASSWORD")
+	cfg.Database = os.Getenv("DATABASE_NOME")
+
+	cfg.StrConn = fmt.Sprintf("%s:%s@/%s?charset=utf8&parseTime=True&loc=Local",
+		cfg.User,
+		cfg.Password,
+		cfg.Database)
+
 	return nil
 }
 
-// functions for accessing configs
-func GetDB() DBConfig {
-	return cfg.DB
-}
+func GetConfigInfo() (int, string, string, error) {
+	if cfg.Port == 0 || cfg.Host == "" || cfg.Database == "" {
+		return 0, "", "", errors.New("error in environment variables")
+	}
 
-func GetServerPort() string {
-	return cfg.API.Port
+	return cfg.Port, cfg.Host, cfg.Database, nil
 }
