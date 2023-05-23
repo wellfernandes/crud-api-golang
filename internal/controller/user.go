@@ -19,7 +19,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err) // test
 	}
 
-	var user models.User
+	user := models.User{}
 
 	err = json.Unmarshal(requestBody, &user)
 	if err != nil {
