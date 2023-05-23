@@ -12,7 +12,7 @@ func main() {
 
 	configs.Load()
 
-	port, host, database, strConn, err := configs.GetConfigInfo()
+	port, host, nameDatabase, userDatabase, strConn, err := configs.GetConfigInfo()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -20,8 +20,9 @@ func main() {
 	log.Println(
 		"\n\nPort:", port,
 		"\nHost:", host,
-		"\nDatabase name:", database,
-		"\nString connection database:", strConn,
+		"\nDatabase name:", nameDatabase,
+		"\nDatabase user:", userDatabase,
+		"\nString connection nameDatabase:", strConn,
 	)
 
 	r := rest.NewServerRouter()
