@@ -6,12 +6,15 @@ import (
 	_ "github.com/go-sql-driver/mysql" //Driver
 )
 
-// Connect open a connection database
+// NewConnection open a connection database
 func NewConnection() (*sql.DB, error) {
 
-	cfg := configs.DBConfig{}
+	_, _, _, _, strConn, err := configs.GetConfigInfo()
+	if err != nil {
+		return nil, err
+	}
 
-	db, err := sql.Open("mysql", cfg.StrConn)
+	db, err := sql.Open("mysql", strConn)
 	if err != nil {
 		return nil, err
 	}
