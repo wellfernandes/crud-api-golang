@@ -2,6 +2,7 @@ package database
 
 import (
 	"crud-api-golang/configs"
+	"crud-api-golang/internal/constants"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql" //Driver
 )
@@ -14,7 +15,7 @@ func NewConnection() (*sql.DB, error) {
 		return nil, err
 	}
 
-	db, err := sql.Open("mysql", strConn)
+	db, err := sql.Open(constants.MYSQL_DRIVER, strConn)
 	if err != nil {
 		return nil, err
 	}
