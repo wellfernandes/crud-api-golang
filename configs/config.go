@@ -35,10 +35,10 @@ func Load() error {
 		cfg.Port = constants.API_DEFAULT_PORT
 	}
 
-	cfg.Host = os.Getenv("HOST")
-	cfg.User = os.Getenv("DATABASE_USER")
-	cfg.Password = os.Getenv("DATABASE_PASSWORD")
-	cfg.Database = os.Getenv("DATABASE_NOME")
+	cfg.Host = os.Getenv(constants.DATABASE_HOST)
+	cfg.User = os.Getenv(constants.DATABASE_USER)
+	cfg.Password = os.Getenv(constants.DATABASE_PASSWORD)
+	cfg.Database = os.Getenv(constants.DATABASE_NAME)
 
 	cfg.StrConn = fmt.Sprintf("%s:%s@/%s?charset=utf8&parseTime=True&loc=Local",
 		cfg.User,
