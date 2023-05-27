@@ -10,11 +10,14 @@ import (
 
 func main() {
 
-	configs.Load()
+	err := configs.Load()
+	if err != nil {
+		log.Printf("\nerror:", err.Error())
+	}
 
 	port, host, nameDatabase, userDatabase, strConn, err := configs.GetConfigInfo()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("\n\nerror setting internal parameters: ", err.Error())
 	}
 
 	log.Println(
@@ -27,6 +30,10 @@ func main() {
 
 	r := rest.NewServerRouter()
 
+	err = http.ListenAndServe(fmt.Sprintf(":%d", port), r)
+	if err != nil {
+		log.Fatal("\n\nerror: ", err.Error())
+	}
+
 	log.Println("\n\nAPI is running...")
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), r))
 }

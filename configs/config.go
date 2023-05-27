@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"crud-api-golang/internal/constants"
 	"errors"
 	"fmt"
 	"github.com/joho/godotenv"
@@ -31,7 +32,7 @@ func Load() error {
 
 	cfg.Port, err = strconv.Atoi(os.Getenv("API_PORT"))
 	if err != nil {
-		cfg.Port = 9000 // default port
+		cfg.Port = constants.API_DEFAULT_PORT
 	}
 
 	cfg.Host = os.Getenv("HOST")
