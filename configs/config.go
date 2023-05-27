@@ -30,9 +30,9 @@ func Load() error {
 		log.Fatal(err)
 	}
 
-	cfg.Port, err = strconv.Atoi(os.Getenv("API_PORT"))
+	cfg.Port, err = strconv.Atoi(os.Getenv(constants.API_PORT))
 	if err != nil {
-		cfg.Port = constants.API_DEFAULT_PORT
+		cfg.Port = constants.DEFAULT_API_PORT
 	}
 
 	cfg.Host = os.Getenv(constants.DATABASE_HOST)
