@@ -12,7 +12,7 @@ func main() {
 
 	err := configs.Load()
 	if err != nil {
-		log.Printf("\nerror:", err.Error())
+		log.Println("\n\nerror: ", err.Error())
 	}
 
 	port, host, nameDatabase, userDatabase, strConn, err := configs.GetConfigInfo()
