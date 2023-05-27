@@ -1,6 +1,7 @@
 package models
 
 import (
+	"crud-api-golang/internal/constants"
 	"errors"
 	"strings"
 	"time"
@@ -32,16 +33,16 @@ func (u *User) PrepareUser() error {
 // checkFields checks fields that cannot be null
 func (u *User) checkFields() error {
 	if u.Name == "" {
-		return errors.New("the name field cannot be empty")
+		return errors.New(constants.ERROR_EMPTY_NAME)
 	}
 	if u.Nick == "" {
-		return errors.New("the nick field cannot be empty")
+		return errors.New(constants.ERROR_EMPTY_NICK)
 	}
 	if u.Email == "" {
-		return errors.New("the email field cannot be empty")
+		return errors.New(constants.ERROR_EMPTY_EMAIL)
 	}
 	if u.Password == "" {
-		return errors.New("the password field cannot be empty")
+		return errors.New(constants.ERROR_EMPTY_PASSWORD)
 	}
 
 	return nil
