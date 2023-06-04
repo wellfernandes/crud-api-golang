@@ -1,9 +1,11 @@
 package constants
 
 const (
-	ERROR_EMPTY_NAME           = "the name field cannot be empty"
-	ERROR_EMPTY_NICK           = "the nick field cannot be empty"
-	ERROR_EMPTY_EMAIL          = "the email field cannot be empty"
-	ERROR_EMPTY_PASSWORD       = "the password field cannot be empty"
-	ERROR_ENVIROMENT_VARIABLES = "error in environment variables"
+	EMPTY_NAME_ERROR           = "the name field cannot be empty"
+	EMPTY_NICK_ERROR           = "the nick field cannot be empty"
+	EMPTY_EMAIL_ERROR          = "the email field cannot be empty"
+	EMPTY_PASSWORD_ERROR       = "the password field cannot be empty"
+	ENVIROMENT_VARIABLES_ERROR = "error in environment variables"
+	SETTING_PARAMETERS_ERROR   = "error setting internal parameters"
+	GENERIC_ERROR              = "error: "
 )
