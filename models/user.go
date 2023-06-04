@@ -33,16 +33,16 @@ func (u *User) PrepareUser() error {
 // checkFields checks fields that cannot be null
 func (u *User) checkFields() error {
 	if u.Name == "" {
-		return errors.New(constants.ERROR_EMPTY_NAME)
+		return errors.New(constants.EMPTY_NAME_ERROR)
 	}
 	if u.Nick == "" {
-		return errors.New(constants.ERROR_EMPTY_NICK)
+		return errors.New(constants.EMPTY_NICK_ERROR)
 	}
 	if u.Email == "" {
-		return errors.New(constants.ERROR_EMPTY_EMAIL)
+		return errors.New(constants.EMPTY_EMAIL_ERROR)
 	}
 	if u.Password == "" {
-		return errors.New(constants.ERROR_EMPTY_PASSWORD)
+		return errors.New(constants.EMPTY_PASSWORD_ERROR)
 	}
 
 	return nil
