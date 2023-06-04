@@ -2,6 +2,7 @@ package main
 
 import (
 	"crud-api-golang/configs"
+	"crud-api-golang/internal/constants"
 	"crud-api-golang/rest"
 	"fmt"
 	"log"
@@ -12,12 +13,12 @@ func main() {
 
 	err := configs.Load()
 	if err != nil {
-		log.Println("\n\nerror: ", err.Error())
+		log.Println(constants.GENERIC_ERROR, err.Error())
 	}
 
 	port, host, nameDatabase, userDatabase, strConn, err := configs.GetConfigInfo()
 	if err != nil {
-		log.Fatal("\n\nerror setting internal parameters: ", err.Error())
+		log.Fatal(constants.SETTING_PARAMETERS_ERROR, err.Error())
 	}
 
 	log.Println(
@@ -32,7 +33,7 @@ func main() {
 
 	err = http.ListenAndServe(fmt.Sprintf(":%d", port), r)
 	if err != nil {
-		log.Fatal("\n\nerror: ", err.Error())
+		log.Fatal(constants.GENERIC_ERROR, err.Error())
 	}
 
 	log.Println("\n\nAPI is running...")
