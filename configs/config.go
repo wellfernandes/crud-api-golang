@@ -52,7 +52,7 @@ func Load() error {
 func GetConfigInfo() (int, string, string, string, string, error) {
 	if cfg.Port == 0 || cfg.Host == "" ||
 		cfg.Database == "" || cfg.User == "" || cfg.StrConn == "" {
-		return 0, "", "", "", "", errors.New(constants.ERROR_ENVIROMENT_VARIABLES)
+		return 0, "", "", "", "", errors.New(constants.ENVIROMENT_VARIABLES_ERROR)
 	}
 
 	return cfg.Port, cfg.Host, cfg.Database, cfg.User, cfg.StrConn, nil
