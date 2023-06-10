@@ -40,7 +40,7 @@ func Load() error {
 	cfg.Password = os.Getenv(constants.DATABASE_PASSWORD)
 	cfg.Database = os.Getenv(constants.DATABASE_NAME)
 
-	cfg.StrConn = fmt.Sprintf("%s:%s@/%s?charset=utf8&parseTime=True&loc=Local",
+	cfg.StrConn = fmt.Sprintf(constants.STRING_CONNECTION,
 		cfg.User,
 		cfg.Password,
 		cfg.Database)
