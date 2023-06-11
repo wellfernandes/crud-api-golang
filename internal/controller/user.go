@@ -7,8 +7,8 @@ import (
 	"crud-api-golang/models"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
+	"strings"
 )
 
 // Create receives a request to create a user
@@ -35,14 +35,16 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 	db, err := database.NewConnection()
 	if err != nil {
-		log.Fatal(err)
+		constants.Error(w, http.StatusInternalServerError, err)
+		return
 	}
 	defer db.Close()
 
-	repository := repository.NewUserRepository(db)
-	userIDCreated, err := repository.Create(user)
+	userRepository := repository.NewUserRepository(db)
+	userIDCreated, err := userRepository.Create(user)
 	if err != nil {
 		constants.Error(w, http.StatusInternalServerError, err)
+		return
 	}
 	constants.JSON(w, http.StatusCreated, userIDCreated)
 }
@@ -50,6 +52,24 @@ func Create(w http.ResponseWriter, r *http.Request) {
 // GetList receives a request to get all a users
 func GetList(w http.ResponseWriter, r *http.Request) {
 
+	requestKeyword := strings.ToLower(r.URL.Query().Get("user"))
+
+	db, err := database.NewConnection()
+	if err != nil {
+		constants.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	userRepository := repository.NewUserRepository(db)
+	users, err := userRepository.GetList(requestKeyword)
+	if err != nil {
+		constants.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	constants.JSON(w, http.StatusOK, users)
+	return
 }
 
 // GetByID receives a request to get a user
