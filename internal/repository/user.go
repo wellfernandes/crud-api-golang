@@ -3,6 +3,7 @@ package repository
 import (
 	"crud-api-golang/models"
 	"database/sql"
+	"fmt"
 )
 
 // user represents a user repository
@@ -36,4 +37,34 @@ func (u user) Create(user *models.User) (uint64, error) {
 	}
 
 	return uint64(userCreatedID), nil
+}
+
+func (u user) GetList(keyword string) ([]models.User, error) {
+
+	nameOrNick := fmt.Sprintf("%%%s%%", keyword)
+
+	usersReturned, err := u.db.Query(
+		"SELECT id, name, nick, email, createAt FROM users WHERE name LIKE ? OR nick LIKE ?", nameOrNick, nameOrNick)
+	if err != nil {
+		return nil, err
+	}
+
+	var users []models.User
+
+	for usersReturned.Next() {
+		var user models.User
+
+		if err = usersReturned.Scan(
+			&user.ID,
+			&user.Name,
+			&user.Nick,
+			&user.Email,
+			&user.CreateAt,
+		); err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+
+	return users, nil
 }
