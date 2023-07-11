@@ -9,6 +9,7 @@ import (
 	"net/http"
 )
 
+// main function for initializing the api
 func main() {
 
 	err := configs.Load()

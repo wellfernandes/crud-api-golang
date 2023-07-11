@@ -10,6 +10,7 @@ import (
 	"strconv"
 )
 
+// DBConfig represents a struct for configuring the database
 type DBConfig struct {
 	StrConn  string
 	Host     string
