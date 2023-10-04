@@ -8,4 +8,5 @@ const (
 	ENVIROMENT_VARIABLES_ERROR = "error in environment variables"
 	SETTING_PARAMETERS_ERROR   = "error setting internal parameters"
 	GENERIC_ERROR              = "error: "
+	ID_NOT_PROVIDED            = "id not provided"
 )
