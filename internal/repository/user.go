@@ -101,3 +101,20 @@ func (u user) GetByID(id string) (*models.User, error) {
 
 	return &user, nil
 }
+
+func (u user) Update(id string, updatedUser *models.User) error {
+	userID, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return err
+	}
+
+	query := "UPDATE users SET name=?, nick=?, email=?, password=? WHERE id=?"
+
+	_, err = u.db.Exec(query, updatedUser.Name, updatedUser.Nick, updatedUser.Email, updatedUser.Password, userID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
