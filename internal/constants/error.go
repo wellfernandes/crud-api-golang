@@ -9,4 +9,5 @@ const (
 	SETTING_PARAMETERS_ERROR   = "error setting internal parameters"
 	GENERIC_ERROR              = "error: "
 	ID_NOT_PROVIDED            = "id not provided"
+	USER_NOT_FOUND             = "user not found"
 )
