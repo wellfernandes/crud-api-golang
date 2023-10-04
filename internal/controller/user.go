@@ -6,6 +6,7 @@ import (
 	"crud-api-golang/internal/repository"
 	"crud-api-golang/models"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -72,9 +73,35 @@ func GetList(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-// GetByID receives a request to get a user
+// GetByID receives a request to get a user by ID
 func GetByID(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
 
+	if id == "" {
+		constants.Error(w, http.StatusBadRequest, errors.New(constants.ID_NOT_PROVIDED))
+		return
+	}
+
+	db, err := database.NewConnection()
+	if err != nil {
+		constants.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	userRepository := repository.NewUserRepository(db)
+	user, err := userRepository.GetByID(id)
+	if err != nil {
+		constants.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	if user == nil {
+		constants.Error(w, http.StatusNotFound, errors.New("Usuário não encontrado"))
+		return
+	}
+
+	constants.JSON(w, http.StatusOK, user)
 }
 
 // Update receives a request to update a user
